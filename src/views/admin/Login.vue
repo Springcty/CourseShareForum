@@ -83,14 +83,13 @@
 </template>
 
 <script>
-// import { generaMenu } from '../../assets/js/menu'
+import { generaMenu } from '../../assets/js/menu'
 export default {
   data () {
     return {
       imageUrl: '',
       verifyCode: '',
       userData: {
-        serialVersionUID: '',
         id: '',
         username: '',
         password: '',
@@ -125,24 +124,22 @@ export default {
     }
   },
   created () {
-    this.getVerifyCode()
+    // this.getVerifyCode()
   },
   methods: {
     async login () {
       this.$refs.loginFormRef.validate(async valid => {
         if (!valid) return
-        // const param = this.$encrypTion(JSON.stringify(this.loginForm))
         const param = {
-          serialVersionUID: null,
           id: null,
-          user_name: this.loginForm.username,
-          pass_word: this.loginForm.password,
+          username: this.loginForm.username,
+          password: this.loginForm.password,
           avatar: null,
           priviledged: false
         }
         const { data: res } = await this.$http.post('/api/users/login', param)
         if (res.flag !== true) {
-          this.$message.error(res.data)
+          this.$message.error(res.message)
           // await this.getVerifyCode()
         } else {
           this.$message.success('登录成功')
@@ -159,7 +156,7 @@ export default {
           window.sessionStorage.setItem('token', res.data.token)
           this.$store.state.token = res.data.token
           this.$store.commit("login", res.data1.user);
-          // await generaMenu()
+          await generaMenu()
           // 2. 通过编程式导航跳转到后台主页，路由地址是 /home
           await this.$router.push('/welcome')
         }
@@ -221,21 +218,11 @@ export default {
       this.dialogFormVisible = true
     },
     register () {
-      // var regEmail = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
-      // // eslint-disable-next-line eqeqeq
-      // if (this.userData.email != '' && !regEmail.test(this.userData.email)) {
-      //   this.$message({
-      //     message: '邮箱格式不正确',
-      //     type: 'error'
-      //   })
-      //   this.userData.email = ''
-      //   return false
-      // }
       // 进行表单校验
       this.$refs.registForm.validate((valid) => {
         if (valid) {
           // 表单校验通过，发ajax请求，把数据录入至后台处理
-          this.$http.post('/api/user/register', this.userData).then((res) => {
+          this.$http.post('/api/users/register', this.userData).then((res) => {
             // 关闭新增窗口
             this.dialogFormVisible = false
             if (res.flag) {
