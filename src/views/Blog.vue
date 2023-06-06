@@ -10,31 +10,30 @@
           <div class="ui horizontal link list">
             <div class="item">
               <img v-bind:src="dataList.avatar" class="ui avatar image">
-              <div class="content"><a class="header">{{dataList.nickname}}</a></div>
+              <div class="content"><a class="header">{{dataList.username}}</a></div>
             </div>
             <div class="item">
-              <i class="calendar icon"></i> {{dataList.createTime}}
+              <i class="calendar icon"></i> {{dataList.time}}
             </div>
             <div class="item">
               <i class="eye icon"></i> {{dataList.views}}
             </div>
             <div class="item">
-              <i class="thumbs up outline icon"></i> {{dataList.thumbs}}
+              <i class="thumbs up outline icon"></i> {{dataList.likes}}
             </div>
           </div>
         </div>
-        <div class="ui attached segment">
-          <!--图片区域-->
+        <!--图片区域-->
+        <!-- <div class="ui attached segment">
           <img v-bind:src=dataList.firstPicture class="ui fluid rounded image">
-        </div>
+        </div> -->
         <div class="ui  attached padded segment">
           <!--内容-->
-          <div class="ui right aligned basic segment">
-<!--            <div class="ui orange basic label">{{dataList.copyright}}</div>-->
+          <!-- <div class="ui right aligned basic segment">
             <el-tag :type="articleType(dataList.copyright).tagType">
               {{ articleType(dataList.copyright).name }}
             </el-tag>
-          </div>
+          </div> -->
           <h2 class="ui center aligned header" v-text="dataList.title"></h2>
           <br>
           <div id="content" class="typo  typo-selection js-toc-content m-padded-lr-responsive m-padded-tb-large" v-html="dataList.content" style="width: 800px">
@@ -45,33 +44,14 @@
 <!--            <div class="ui basic teal left pointing label" v-for="item in tagList" :key="item.tagId">{{item.tagName}}</div>-->
           </div>
 
-          <!--赞赏-->
-          <div class="ui center aligned basic segment">
-            <button id="payButton" class="ui orange basic circular button">赞赏</button>
-          </div>
-          <div class="ui payQR flowing popup transition hidden">
-            <div class="ui orange basic label">
-              <div class="ui images" style="font-size: inherit !important;">
-                <div class="image">
-                  <img src="https://r.photo.store.qq.com/psc?/V53KcXfb1umonn4HbITu3rINxs43TczD/45NBuzDIW489QBoVep5mcUTT*ciAgjJ0cppZCI5w1ILm3Q2J4WJdIQXJXdXVu5HUtU4pM3n8zAHqY3rf6z3B415ulY*M0Dp.HBBJhfDaF*E!/r" alt="" class="ui rounded bordered image" style="width: 120px">
-                  <div>支付宝</div>
-                </div>
-                <div class="image">
-                  <img src="https://r.photo.store.qq.com/psc?/V53KcXfb1umonn4HbITu3rINxs43TczD/45NBuzDIW489QBoVep5mcaapv*CZPLor9HYeVrOOiVJnvoxLW18OIo4.CeFhPXXRsV3xEfxMyKMRodIkn6GwaENGRnt8bkvhKT7JrLFzM.w!/r" alt="" class="ui rounded bordered image" style="width: 120px">
-                  <div>微信</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
         </div>
         <div class="ui attached positive message">
           <!--博客信息-->
           <div class="ui middle aligned grid">
             <div class="eleven wide column">
               <ui class="list">
-                <li>作者：{{dataList.nickname}}（联系作者）</li>
-                <li>发表时间：{{dataList.createTime}}</li>
+                <li>作者：{{dataList.username}}（联系作者）</li>
+                <li>发表时间：{{dataList.time}}</li>
               </ui>
             </div>
           </div>
@@ -86,9 +66,9 @@
                   <img v-bind:src=item.avatar>
                 </a>
                 <div class="content">
-                  <a class="author">{{item.nickname}}</a>
+                  <a class="author">{{item.username}}</a>
                   <div class="metadata">
-                    <span class="date">{{item.createTime}}</span>
+                    <span class="date">{{item.time}}</span>
                   </div>
                   <div class="text" v-html="item.content">
                   </div>
@@ -103,9 +83,9 @@
                       <img v-bind:src=item2.avatar>
                     </a>
                     <div class="content">
-                      <a class="author">{{item2.nickname}}<a class="author" v-if="item2.replyNickname.length!==0">回复</a><a>{{item2.replyNickname}}:</a></a>
+                      <a class="author">{{item2.username}}<a class="author" v-if="item2.replyNickname.length!==0">回复</a><a>{{item2.replyNickname}}:</a></a>
                       <div class="metadata">
-                        <span class="date">{{item2.createTime}}</span>
+                        <span class="date">{{item2.time}}</span>
                       </div>
                       <div class="text" v-html="item2.content">
                       </div>
@@ -159,9 +139,6 @@
       </ol>
     </div>
 
-    <div id="qrcode" class="ui wechat-qr flowing popup transition hidden " style="width: 130px !important;">
-    </div>
-
     <br>
     <br>
     <Footer></Footer>
@@ -170,8 +147,6 @@
 </template>
 <script>
 import Prism from '../assets/lib/prism/prism'
-// import QRCode from '../assets/lib/qrcode/qrcode.min.js'
-import QRCode from 'qrcodejs2'
 import Footer from '../components/layout/Footer'
 import tocbot from "tocbot";
 export default {
@@ -188,9 +163,9 @@ export default {
         replyUid: ''
       },
       uid: '',
-      user: {},
-      nickname: '',
-      // 被激活的链接地址
+      // user: {},
+      // nickname: '',
+      username: '',
       avatar: '',
       dataList: [],
       dataList2: [],
@@ -341,7 +316,7 @@ export default {
         // var param = this.$encrypTion(JSON.stringify(this.formData))
         // 表单校验通过，发ajax请求，把数据录入至后台处理
         this.$http.post('/api/reply', this.formData).then((res) => {
-          if (res.data.flag) {
+          if (res.flag) {
             this.getCommentList()
             this.$store.state.parentCommentId = -1
             this.formData.content = '请输入评论信息...'
@@ -361,7 +336,7 @@ export default {
       }
     },
     replyComment (item) { // 获取被评论者的id作为父id
-      this.formData.content = '对' + item.nickname + '说点啥吧：(回复时，请删除本行)'
+      this.formData.content = '对' + item.username + '说点啥吧：(回复时，请删除本行)'
       this.formData.replyUid = item.uid
       if (item.parentCommentId === '-1') { // 代表回复的是根评论
         this.$store.state.parentCommentId = item.commentId
@@ -411,18 +386,9 @@ export default {
     $('.menu.toggle').click(function () {
       $('.m-item').toggleClass('m-mobile-hide')
     })
-    $('#payButton').popup({
-      popup: $('.payQR.popup'),
-      on: 'click',
-      position: 'bottom center'
-    })
     $('.toc.button').popup({
       popup: $('.toc-container.popup'),
       on: 'click',
-      position: 'left center'
-    })
-    $('.wechat').popup({
-      popup: $('.wechat-qr'),
       position: 'left center'
     })
     $('#toTop-button').click(function () {
@@ -430,15 +396,6 @@ export default {
     })
     $('#toBottom-button').click(function () {
       $(window).scrollTo(999999999, 1000)
-    })
-    // eslint-disable-next-line no-unused-vars
-    var qrcode = new QRCode('qrcode', {
-      text: 'https://blog.csdn.net/Dlihctcefrep',
-      width: 110,
-      height: 110,
-      colorDark: '#000000',
-      colorLight: '#ffffff',
-      correctLevel: QRCode.CorrectLevel.H
     })
   },
   watch: {
