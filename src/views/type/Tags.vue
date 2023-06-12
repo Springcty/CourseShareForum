@@ -104,7 +104,7 @@ export default {
       labelList: [], // 标签列表的数据
       dataList: [],
       user: {},
-      nickname: '',
+      username: '',
       // 被激活的链接地址
       avatar: '',
       pagination: { // 分页相关模型数据

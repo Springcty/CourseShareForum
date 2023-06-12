@@ -3,7 +3,7 @@
     <!-- 头部区域 -->
     <el-header>
       <div>
-        <el-avatar v-bind:src="this.$store.state.avatar"></el-avatar>
+        <el-avatar :src="this.$store.state.avatar"></el-avatar>
         <span>博客后台管理</span>
       </div>
       <router-link to="/home">

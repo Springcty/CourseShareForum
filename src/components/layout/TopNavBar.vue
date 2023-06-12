@@ -90,17 +90,17 @@
       </div>
     </div>
     <SearchModel ref="searchModel"></SearchModel>
-    <Room v-if="this.$store.state.username" ref="room"></Room>
+    <!-- <Room v-if="this.$store.state.username" ref="room"></Room> -->
   </div>
 </template>
 
 <script>
 import SearchModel from '../model/SearchModel'
-import Room from '../../views/backyard/Room'
+// import Room from '../../views/backyard/Room'
 import { resetRouter } from '../../router'
 export default {
   components: {
-    Room,
+    // Room,
     SearchModel
   },
   mounted () {

@@ -67,7 +67,7 @@ export const constantRoutes = [
     component: Blog
   },
   {
-    path: '/Types/:typeId',
+    path: '/Types/:categoryId',
     name: 'Types',
     component: Types
   },

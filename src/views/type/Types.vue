@@ -124,7 +124,7 @@ export default {
         queryString: null // 查询条件
       },
       user: {},
-      nickname: '',
+      username: '',
       // 被激活的链接地址
       avatar: ''
     }

@@ -15,7 +15,7 @@
               <div class="ui dropdown item">
                 <div class="text">
                   <img class="ui avatar image" v-bind:src="avatar">
-                  <span>{{this.nickname}}</span>
+                  <span>{{this.username}}</span>
                 </div>
                 <i class="dropdown icon"></i>
                 <div class="menu">
@@ -75,7 +75,7 @@ export default {
         queryString: null // 查询条件
       },
       user: {},
-      nickname: '',
+      username: '',
       avatar: '',
       activeIndex: ''
     }
@@ -83,7 +83,7 @@ export default {
   created () {
     this.activeIndex = this.$store.state.activeIndex
     this.avatar = this.$store.state.avatar
-    this.nickname = this.$store.state.nickname
+    this.username = this.$store.state.username
   },
   methods: {
     // 保存链接的激活状态

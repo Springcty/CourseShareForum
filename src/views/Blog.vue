@@ -56,6 +56,8 @@
                   <div class="text" v-html="item.content">
                   </div>
                   <div class="actions" >
+                    <a class="reply" @click="replyComment(item)">回复</a>
+                    <a class="reply" @click="deleteComment(item)" v-show="item.id==id">删除</a>
                     <a class="reply" @click="deleteComment(item)" v-show="item.uid==uid">删除</a>
                   </div>
                 </div>
@@ -109,7 +111,7 @@ export default {
     }
   },
   created () {
-    this.uid = this.$store.state.uid
+    this.id = this.$store.state.id
     this.formData.blogId = this.$route.path.split('/blog/')[1]
     this.getOneBlog()
     this.getCommentList()
@@ -139,7 +141,7 @@ export default {
     async like () {
       if (this.toLogin()) {
         const blogId = this.$store.state.blogId
-        // const { data: res } = await this.$http.get(`/api/likes/${blogId}/${this.uid}`)
+        // const { data: res } = await this.$http.get(`/api/likes/${blogId}/${this.id}`)
         // if (res.flag) {
         //   this.$message.success(res.message)
         //   this.likeFlag = true

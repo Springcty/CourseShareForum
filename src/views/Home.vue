@@ -221,8 +221,8 @@ export default {
     toTag (tagId) {
       this.$router.push({ path: "/tags/" + tagId });
     },
-    toType (typeId) {
-      this.$router.push({ path: "/types/" + typeId });
+    toType (categoryId) {
+      this.$router.push({ path: "/types/" + categoryId });
     },
     toBlog (blogId) {
       this.$store.state.searchFlag = false;

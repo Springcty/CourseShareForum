@@ -143,19 +143,10 @@ export default {
           // await this.getVerifyCode()
         } else {
           this.$message.success('登录成功')
-          // 1. 将登录成功之后的 token，保存到客户端的 sessionStorage 中
-          //   1.1 项目中出了登录之外的其他API接口，必须在登录之后才能访问
-          //   1.2 token 只应在当前网站打开期间生效，所以将 token 保存在 sessionStorage 中
-          // Set<String> keys;
-          // keys = res.userInfo.keySet();
-          // token = keys.first();
-          // user = res.userInfo.get(token);
-          // for(String key : res.userInfo.keySet()){
-          // }
-
-          window.sessionStorage.setItem('token', res.data.token)
-          this.$store.state.token = res.data.token
-          this.$store.commit("login", res.data1.user);
+          window.sessionStorage.setItem('token', res.data)
+          this.$store.state.token = res.data
+          this.$store.commit("login", res.data1);
+          console.log(this.$store.state.token)
           await generaMenu()
           // 2. 通过编程式导航跳转到后台主页，路由地址是 /home
           await this.$router.push('/welcome')

@@ -10,7 +10,7 @@ module.exports = {
         }
       },
       '/serverApi': {
-        target: 'http://127.0.0.1:9002/',
+        target: 'http://101.37.254.247:9002',
         changeOrigin: true,
         // secure: false,
         pathRewrite: {
@@ -18,7 +18,7 @@ module.exports = {
         }
       },
       '/extension': {
-        target: 'http://ip:9003',
+        target: 'http://101.37.254.247:9003',
         changeOrigin: true,
         // secure: false,
         pathRewrite: {
@@ -34,7 +34,7 @@ module.exports = {
       //   }
       // },
       '/dl': {
-        target: 'http://127.0.0.1:9005',
+        target: 'http://101.37.254.247:9005',
         changeOrigin: true,
         // secure: false,
         pathRewrite: {
@@ -42,7 +42,7 @@ module.exports = {
         }
       },
       // '/ai': {
-      //   target: 'http://127.0.0.1:9007',
+      //   target: 'http://101.37.254.247:9007',
       //   changeOrigin: true,
       //   // secure: false,
       //   pathRewrite: {
