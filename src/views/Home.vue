@@ -22,7 +22,7 @@
             <div class="ui top attached segment">
               <div class="ui middle aligned two column grid my-shadow">
                 <div class="column">
-                  <h3 class="ui my-blue header" >博客</h3>
+                  <h3 class="ui my-blue header" >文章</h3>
                 </div>
                   <div class="right aligned column"><h4 class="ui header m-inline-block m-text" v-if="pagination.queryString!=='' && pagination.queryString!==null" style="height: 1px !important;">根据"{{pagination.queryString}}"的搜索结果</h4>
                   共 <h2 class="ui orange header m-inline-block m-text-thin">{{pagination.total}}</h2> 篇
@@ -61,7 +61,7 @@
                         </div>
                       </div>
                       <div class="right aligned five wide column">
-                        <a target="_blank" class="ui my-blue basic label m-padded-tiny m-text-thin">{{item.categoryName}}</a>
+                        <a target="_blank" class="ui my-blue basic label m-padded-tiny m-text-thin">{{item.categoryname}}</a>
                       </div>
                     </div>
                   </div>
@@ -112,7 +112,7 @@
                 <div class="ui fluid vertical menu">
                   <template v-for="(item, index) in categoryList">
                     <a class="item" v-if='index<6' :key="item.id" @click="toType(item.id)">
-                      {{ item.categoryName }}
+                      {{ item.categoryname }}
                       <div class="ui blue basic left pointing label">{{item.categoryCount}}</div>
                     </a>
                   </template>
@@ -230,7 +230,7 @@ export default {
       this.$router.push({ path: "/blog/" + blogId });
     },
     async getLatestList () {
-      const { data: res } = await this.$http.get('/api/server/home/latestList')
+      const { data: res } = await this.$http.get('/api/home/latestList')
       this.latestList = res.data
     },
     async getcategoryList () {
@@ -261,7 +261,7 @@ export default {
       const { data: res } = await this.$http.post('/api/home/articles', param)
       // 解析controller响应回的数据
       if (!res.flag) {
-        return this.$message.error('获取博客列表失败！')
+        return this.$message.error('获取文章列表失败！')
       }
       this.pagination.total = res.data.total
       this.dataList = res.data.records

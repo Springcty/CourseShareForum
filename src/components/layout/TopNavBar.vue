@@ -30,11 +30,6 @@
             <i class="home icon" style="color: whitesmoke" /><span style="color: whitesmoke;margin-right: 10px">首页</span>
           </router-link>
         </div>
-        <!-- <div class="menus-item">
-          <router-link to="/discovery">
-            <i class="el-icon-headset" style="color: whitesmoke"/><span style="color: whitesmoke;margin-right: 10px">音乐盒</span>
-          </router-link>
-        </div> -->
         <div class="user-btn">
           <a>
             <i class="el-icon-s-operation" style="color: whitesmoke"/><span style="color: whitesmoke;margin-right: 10px">类别</span>

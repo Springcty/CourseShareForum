@@ -86,17 +86,17 @@ export default {
         currentPage: 1,
         pageSize: 20,
         queryString: value,
-        sort: this.pagination.sort,
+        sort: null,
         categoryId: null,
         labelId: null
       }
       this.$http.post('/api/home/search', param).then((res) => {
         // 关闭新增窗口
-        if (res.data.flag) {
+        if (res.flag) {
           this.blogList = res.data.records
           this.total = res.data.total
         } else { // 执行失败
-          this.$message.error(res.data.code)
+          this.$message.error(res.message)
         }
       })
     }
