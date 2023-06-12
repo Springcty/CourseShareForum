@@ -13,17 +13,6 @@
     <div class="box">
 <!--    <div  class="m-container-small m-padded-tb-big">-->
       <div class="filter-container">
-        <!-- <el-input placeholder="请输入标题" v-model="pagination.queryString" style="width: 200px;"
-                  class="filter-item" clearable @clear="findPage"></el-input>
-        <el-select v-model="value" placeholder="请选择">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-        <el-button @click="findPage()" icon="el-icon-search" class="dalfBut">查询博客</el-button> -->
         <el-button type="primary" class="butT" @click="pushPostBlogs">添加博客</el-button>
       </div>
       <div class="ui container">
@@ -31,7 +20,8 @@
           <!--                        id,用户名，真实姓名，角色，备注，最后登录时间，创建时间-->
           <el-table-column type="index" min-width="15px" align="center" label="序号"></el-table-column>
           <el-table-column prop="title" label="标题" align="center"></el-table-column>
-          <el-table-column prop="typeName" label="类型" align="center"></el-table-column>
+          <el-table-column prop="categoryName" label="类型" align="center"></el-table-column>
+          <el-table-column prop="descript" label="摘要" align="center"></el-table-column>
           <!-- <el-table-column label="推荐" prop="recommend">
             <template slot-scope="scope">
               <el-switch v-model="scope.row.recommend"
@@ -41,8 +31,9 @@
           </el-table-column> -->
           <el-table-column label="管理" align="center">
             <template slot-scope="scope">
-              <!-- <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button> -->
-              <el-button size="mini" type="primary" @click="handleUpdate(scope.row)">编辑</el-button>
+              <el-button size="mini" type="primary" @click="handleRead(scope.row)">查看</el-button>
+              <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
+              <!-- <el-button size="mini" type="primary" @click="handleUpdate(scope.row)">编辑</el-button> -->
               <!-- <el-button size="mini" type="info" @click="handleForbidden(scope.row)">禁用</el-button> -->
             </template>
           </el-table-column>
@@ -216,7 +207,10 @@ export default {
     },
     handleUpdate (row) {
       this.$router.push('/postblogs')
-      this.$store.state.adminBlogId = row.blogId
+      this.$store.state.adminBlogId = row.id
+    },
+    handleRead (row) {
+      this.$router.push(`/blog/${row.id}`)
     }
   },
   mounted () {
