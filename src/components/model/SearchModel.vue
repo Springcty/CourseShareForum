@@ -9,8 +9,7 @@
       <!-- 输入框 -->
       <div class="search-input-wrapper">
         <i class="el-icon-search"></i>
-        <input style="width: 80%;border: none;outline: medium" v-model="input" placeholder="输入文章标题或内容" />
-<!--        <el-input v-model="input" placeholder="请输入内容"></el-input>-->
+        <input style="width: 80%;border: none;outline: medium" v-model="input" placeholder="输入文章标题或内容..." />
       </div>
       <div class="search-result-wrapper">
         <hr class="divider" />
@@ -20,21 +19,18 @@
         <br>
         <br>
         <div v-for="item in blogList" :key="item.id">
-      <el-card class="box-card my-shadow">
-        <div slot="header" class="clearfix">
-          <span style="font-weight: bold;cursor:pointer;" v-html="item.title" @click="toBlog(item.id)"></span>
-        </div>
-        <div class="text item" v-html="item.content" style="cursor:pointer;" @click="toBlog(item.id)">
-        </div>
-      </el-card>
+          <el-card class="box-card my-shadow">
+            <div slot="header" class="clearfix">
+              <span style="font-weight: bold;cursor:pointer;" v-html="item.title" @click="toBlog(item.id)"></span>
+            </div>
+            <div class="text item" v-html="item.content" style="cursor:pointer;" @click="toBlog(item.id)">
+            </div>
+          </el-card>
           <br>
         </div>
         <!-- 搜索结果不存在提示 -->
         <el-card class="box-card my-shadow"  v-show="total === 0">
-          <div
-            style="font-size:0.875rem"
-          >
-            找不到您查询的内容：" <span style="font-weight: bold">{{input}}</span> "
+          <div style="font-size:0.875rem" >找不到您查询的内容：" <span style="font-weight: bold">{{input}}</span> "
           </div>
         </el-card>
       <span slot="footer" class="dialog-footer">
@@ -81,7 +77,7 @@ export default {
     $route (to, from) {
       this.path = to.path
     },
-    input (value) {
+    async input (value) {
       const param = {
         currentPage: 1,
         pageSize: 20,
@@ -90,15 +86,21 @@ export default {
         categoryId: null,
         labelId: null
       }
-      this.$http.post('/api/home/search', param).then((res) => {
-        // 关闭新增窗口
-        if (res.flag) {
-          this.blogList = res.data.records
-          this.total = res.data.total
-        } else { // 执行失败
-          this.$message.error(res.message)
-        }
-      })
+      const { data: res } = await this.$http.post('/api/home/search', param)
+      if (res.flag) {
+        this.blogList = res.data.records
+        this.total = res.data.total
+      } else { // 执行失败
+        this.$message.error(res.message)
+      }
+      // this.$http.post('/api/home/search', param).then((res) => {
+      //   if (res.flag) {
+      //     this.blogList = res.data.records
+      //     this.total = res.data.total
+      //   } else { // 执行失败
+      //     this.$message.error(res.message)
+      //   }
+      // })
     }
   }
 }

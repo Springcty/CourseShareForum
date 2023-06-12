@@ -104,7 +104,9 @@
                     <i class="idea icon"></i>分类
                   </div>
                   <div class="right aligned column">
-                    <a href="/types" target="_blank">more <i class="angle double right icon"></i></a>
+                    <router-link to="/types">
+                    more <i class="angle double right icon"></i>
+                    </router-link>
                   </div>
                 </div>
               </div>
@@ -126,8 +128,13 @@
                     <div class="column">
                       <i class="tags icon"></i>标签
                     </div>
-                    <div class="right aligned column">
+                    <!-- <div class="right aligned column">
                       <a href="/tags" target="_blank">more <i class="angle double right icon"></i></a>
+                    </div> -->
+                    <div class="right aligned column">
+                      <router-link to="/tags">
+                      more <i class="angle double right icon"></i>
+                      </router-link>
                     </div>
                   </div>
                 </div>

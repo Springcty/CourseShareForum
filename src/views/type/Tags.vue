@@ -20,12 +20,12 @@
 
           <div class="ui attached segment m-padded-tb-large my-shadow">
             <template v-for="item in labelList">
-              <div class="ui labeled button m-margin-tb-tiny" @click="saveNavState(item)" v-if="activeId===item.labelId" :key="item.labelId">
-                <a class="ui blue basic button">{{item.labelName}}</a>
+              <div class="ui labeled button m-margin-tb-tiny" @click="saveNavState(item)" v-if="activeId===item.id" :key="item.id">
+                <a class="ui blue basic button">{{item.labelname}}</a>
                 <div class="ui basic blue left pointing label">{{item.labelCount}}</div>
               </div>
-              <div class="ui labeled button m-margin-tb-tiny" @click="saveNavState(item)" v-else :key="item.labelId">
-                <a class="ui basic button">{{item.labelName}}</a>
+              <div class="ui labeled button m-margin-tb-tiny" @click="saveNavState(item)" v-else :key="item.id">
+                <a class="ui basic button">{{item.labelname}}</a>
                 <div class="ui basic left pointing label">{{item.labelCount}}</div>
               </div>
             </template>
@@ -58,7 +58,7 @@
                       </div>
                     </div>
                     <div class="right aligned five wide column">
-                      <a target="_blank" class="ui my-blue basic label m-padded-tiny m-text-thin">{{item.labelName}}</a>
+                      <a target="_blank" class="ui my-blue basic label m-padded-tiny m-text-thin">{{item.labelname}}</a>
                     </div>
                   </div>
                 </div>
@@ -111,7 +111,6 @@ export default {
         currentPage: 1, // 当前页码
         pageSize: 6, // 每页显示的记录数
         total: 0, // 总记录数
-        queryString: null // 查询条件
       }
     }
   },
@@ -129,7 +128,7 @@ export default {
       this.$router.push({ path: "/blog/" + blogId });
     },
     async saveNavState (item) {
-      this.activeId = item.labelId
+      this.activeId = item.id
       if (item.labelCount === 0) {
         this.$message.error('查询失败，当前所在标签的博客数为0')
       } else {
@@ -148,7 +147,7 @@ export default {
       const param = {
         currentPage: this.pagination.currentPage,
         pageSize: this.pagination.pageSize,
-        queryString: this.pagination.queryString,
+        queryString: null,
         sort: null,
         categoryId: null,
         labelId: labelId

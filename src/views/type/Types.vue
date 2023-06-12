@@ -21,11 +21,11 @@
         <div class="ui attached segment m-padded-tb-large my-shadow" >
           <template v-for="item in categoryList">
             <div class="ui labeled button m-margin-tb-tiny" @click="saveNavState(item)" v-if="activeId===item.id" :key="item.id">
-              <a class="ui basic blue button">{{item.categoryName}}</a>
+              <a class="ui basic blue button">{{item.categoryname}}</a>
               <div class="ui basic blue left pointing label">{{item.categoryCount}}</div>
             </div>
             <div class="ui labeled button m-margin-tb-tiny" @click="saveNavState(item)" v-else :key="item.id">
-              <a class="ui basic button">{{item.categoryName}}</a>
+              <a class="ui basic button">{{item.categoryname}}</a>
               <div class="ui basic left pointing label">{{item.categoryCount}}</div>
             </div>
           </template>
@@ -70,7 +70,7 @@
                     </div>
                   </div>
                   <div class="right aligned five wide column">
-                    <a target="_blank" class="ui my-blue basic label m-padded-tiny m-text-thin">{{item.categoryName}}</a>
+                    <a target="_blank" class="ui my-blue basic label m-padded-tiny m-text-thin">{{item.categoryname}}</a>
                   </div>
                 </div>
               </div>
@@ -121,10 +121,8 @@ export default {
         currentPage: 1, // 当前页码
         pageSize: 6, // 每页显示的记录数
         total: 0, // 总记录数
-        queryString: null // 查询条件
       },
       user: {},
-      nickname: '',
       // 被激活的链接地址
       avatar: ''
     }
@@ -139,7 +137,7 @@ export default {
       this.$router.push({ path: "/blog/" + blogId });
     },
     async saveNavState (item) {
-      this.activeId = item.categoryId
+      this.activeId = item.id
       if (item.typeCount === 0) {
         this.$message.error('查询失败，当前所在分类的博客数为0')
       } else {
@@ -158,17 +156,15 @@ export default {
       }
       this.activeId = categoryId
       this.$store.state.categoryId = null
-      // 发送ajax，提交分页请求（页码，每页显示条数，查询条件)
       const param = {
         currentPage: this.pagination.currentPage,
         pageSize: this.pagination.pageSize,
-        queryString: this.pagination.queryString,
+        queryString: null,
         sort: null,
         categoryId: categoryId,
         labelId: null
       }
       const { data: res } = await this.$http.post('/api/articles/category', param)
-      // 解析controller响应回的数据
       if (!res.flag) {
         return this.$message.error('获取首页列表失败！')
       }
@@ -207,8 +203,8 @@ export default {
   }
   .types-banner {
     height: 67vh;
-    background: url(https://r.photo.store.qq.com/psc?/V53KcXfb1umonn4HbITu3rINxs43TczD/45NBuzDIW489QBoVep5mcSPhM*LqG*bYzP4o2JVbaheOs2JWlUoBrHyiAhmNeT.Mc*97fdCoA2.t2KVGQ6m2uCiYugKboqB1H4fEZShV3MM!/r) center
-    center / cover no-repeat;
+    /* background: url(https://r.photo.store.qq.com/psc?/V53KcXfb1umonn4HbITu3rINxs43TczD/45NBuzDIW489QBoVep5mcSPhM*LqG*bYzP4o2JVbaheOs2JWlUoBrHyiAhmNeT.Mc*97fdCoA2.t2KVGQ6m2uCiYugKboqB1H4fEZShV3MM!/r) center
+    center / cover no-repeat; */
     background-color: #49b1f5;
   }
 </style>
