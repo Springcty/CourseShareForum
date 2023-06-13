@@ -12,22 +12,22 @@
     <div class="app-container">
     <div class="box">
 <!--    <div  class="m-container-small m-padded-tb-big">-->
-      <div class="filter-container">
+      <!-- <div class="filter-container">
         <el-input placeholder="请输入标题" v-model="pagination.queryString" style="width: 200px;"
                   class="filter-item" clearable @clear="findPage"></el-input>
         <el-button @click="findPage()" icon="el-icon-search" class="dalfBut">查询博客</el-button>
-      </div>
+      </div> -->
       <div class="ui container">
         <el-table size="middle" current-row-key="id" :data="dataList" stripe highlight-current-row>
           <!--                        id,用户名，真实姓名，角色，备注，最后登录时间，创建时间-->
           <el-table-column type="index" min-width="15px" align="center" label="序号"></el-table-column>
           <el-table-column prop="title" label="标题" align="center"></el-table-column>
           <el-table-column prop="descript" label="简介" align="center"></el-table-column>
-          <el-table-column prop="typeName" label="类型" align="center"></el-table-column>
+          <el-table-column prop="categoryName" label="类型" align="center"></el-table-column>
           <!-- <el-table-column prop="createTime" label="创建时间" align="center"></el-table-column> -->
           <el-table-column label="管理" align="center">
             <template slot-scope="scope">
-              <el-button size="mini" type="primary" @click="toBlog(scope.row.blogId)">查看博客</el-button>
+              <el-button size="mini" type="primary" @click="toBlog(scope.row.id)">查看博客</el-button>
               <el-button size="mini" type="danger" @click="handleCancelFavorites(scope.row)">取消收藏</el-button>
             </template>
           </el-table-column>
@@ -89,7 +89,7 @@ export default {
         categoryId: null,
         labelId: null
       }
-      const { data: res } = await this.$http.post('/api/stars/getByUser', param)
+      const { data: res } = await this.$http.post('http://101.37.254.247:9001/stars/getByUser', param)
       if (!res.flag) {
         return this.$message.error(res.message)
       }
@@ -118,9 +118,10 @@ export default {
       this.resetForm()
     },
     cancelFavorites (blogId) {
-      const { data: res } = this.$http.get(`/api/server/blog/favorite/${blogId}/${this.id}`)
+      const { data: res } = this.$http.post(`http://101.37.254.247:9001/stars/${blogId}`)
       if (res.flag) {
         this.$message.success(res.message)
+        this.findPage()
       }
     },
     toBlog (blogId) {
@@ -134,7 +135,8 @@ export default {
         cancelButtonText: '否'
       })
         .then(() => {
-          this.cancelFavorites(row.blogId)
+          console.log("确认取消收藏")
+          this.cancelFavorites(row.id)
         })
         .catch(action => {
           this.$message({

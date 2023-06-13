@@ -21,7 +21,35 @@
           <el-table-column type="index" min-width="15px" align="center" label="序号"></el-table-column>
           <el-table-column prop="title" label="标题" align="center"></el-table-column>
           <el-table-column prop="categoryName" label="类型" align="center"></el-table-column>
-          <el-table-column prop="descript" label="摘要" align="center"></el-table-column>
+          <el-table-column prop="descript" label="摘要" align="center" width="320"></el-table-column>
+          <!-- 文章浏览量 -->
+          <el-table-column prop="viewsCount" label="浏览量" width="70" align="center">
+            <template slot-scope="scope">
+              <span v-if="scope.row.views">{{ scope.row.views }}</span>
+              <span v-else>0</span>
+            </template>
+          </el-table-column>
+          <!-- 文章点赞量 -->
+          <el-table-column prop="likes" label="点赞量" width="70" align="center">
+            <template slot-scope="scope">
+              <span v-if="scope.row.likes">{{ scope.row.likes }}</span>
+              <span v-else>0</span>
+            </template>
+          </el-table-column>
+          <!-- 文章收藏量 -->
+          <el-table-column prop="stars" label="收藏量" width="70" align="center">
+            <template slot-scope="scope">
+              <span v-if="scope.row.stars">{{ scope.row.stars }}</span>
+              <span v-else>0</span>
+            </template>
+          </el-table-column>
+          <!-- 文章评论量 -->
+          <el-table-column prop="comments" label="评论量" width="70" align="center">
+            <template slot-scope="scope">
+              <span v-if="scope.row.comments">{{ scope.row.comments }}</span>
+              <span v-else>0</span>
+            </template>
+          </el-table-column>
           <!-- <el-table-column label="推荐" prop="recommend">
             <template slot-scope="scope">
               <el-switch v-model="scope.row.recommend"

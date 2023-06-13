@@ -57,7 +57,7 @@
                 </router-link>
               </li>
               <li>
-                <a href="https://admin.tcefrep.site/">
+                <a href="http://101.37.254.247:8081/">
                   <i class="user secret icon"/> 管理员
                 </a>
               </li>
