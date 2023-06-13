@@ -10,7 +10,13 @@
           <div class="ui horizontal link list">
             <div class="item">
               <img v-bind:src="dataList.avatar" class="ui avatar image">
-              <div class="content"><a class="header">{{dataList.username}}</a></div>
+              <div class="content" @click="toUser(dataList.authorid)"><a class="header">{{dataList.username}}</a></div>
+            </div>
+            <div class="item">
+              <div button class="ui blue button" @click="follow">
+                <i v-if="followFlag" >取消关注</i>
+                <i v-else type="primary">关注</i>
+              </div>
             </div>
             <div class="item">
               <i class="calendar icon"></i> {{dataList.time}}
@@ -49,14 +55,14 @@
                   <img v-bind:src=item.avatar>
                 </a>
                 <div class="content">
-                  <a class="author">{{item.username}}</a>
+                  <a class="author" @click="toUser(item.userid)">{{item.username}}</a>
                   <div class="metadata">
                     <span class="date">{{item.time}}</span>
                   </div>
                   <div class="text" v-html="item.content">
                   </div>
                   <div class="actions" >
-                    <a class="reply" @click="deleteComment(item)" v-show="item.uid==uid">删除</a>
+                    <a class="reply" @click="deleteComment(item)" v-show="item.userid==uid">删除</a>
                   </div>
                 </div>
               </div>
@@ -105,7 +111,8 @@ export default {
       dataList: [],
       dataList2: [],
       likeFlag: '',
-      starFlag: ''
+      starFlag: '',
+      followFlag: ''
     }
   },
   created () {
@@ -118,6 +125,9 @@ export default {
     tocbot.destroy();
   },
   methods: {
+    toUser (userId) {
+      this.$router.push({ path: "/userinfo/" + userId });
+    },
     async star () {
       if (this.toLogin()) {
         const blogId = this.$store.state.blogId
@@ -128,7 +138,7 @@ export default {
             this.starFlag = true
           }
         } else {
-          const { data: res } = await this.$http.delete(`/api/stars/${blogId}`)
+          const { data: res } = await this.$http.post(`/api/stars/${blogId}`)
           if (res.flag) {
             this.$message.success("取消收藏成功")
             this.starFlag = false
@@ -150,6 +160,25 @@ export default {
           if (res.flag) {
             this.$message.success("取消点赞成功")
             this.likeFlag = false
+          }
+        }
+        this.getOneBlog()
+      }
+    },
+    async follow () {
+      if (this.toLogin()) {
+        const authorId = this.dataList.authorid
+        if (this.followFlag === false) {
+          const { data: res } = await this.$http.get(`/api/follow/${authorId}`)
+          if (res.flag) {
+            this.$message.success("关注成功")
+            this.followFlag = true
+          }
+        } else {
+          const { data: res } = await this.$http.delete(`/api/follow/${authorId}`)
+          if (res.flag) {
+            this.$message.success("取消关注成功")
+            this.followFlag = false
           }
         }
       }
@@ -265,6 +294,7 @@ export default {
       this.dataList = res.data
       this.likeFlag = res.data.liked
       this.starFlag = res.data.stared
+      this.followFlag = res.data.followed
       setTimeout(() => {
         // eslint-disable-next-line no-undef
         tocbot.init({

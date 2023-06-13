@@ -61,7 +61,7 @@
                         </div>
                       </div>
                       <div class="right aligned five wide column">
-                        <a target="_blank" class="ui my-blue basic label m-padded-tiny m-text-thin">{{item.categoryname}}</a>
+                        <a target="_blank" class="ui my-blue basic label m-padded-tiny m-text-thin">{{item.categoryName}}</a>
                       </div>
                     </div>
                   </div>

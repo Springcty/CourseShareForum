@@ -26,8 +26,8 @@
             <div class="eleven wide column">
               <div class="ui mini horizontal link list">
                 <div class="item">
-                  <!-- <img v-bind:src=item.avatar class="ui avatar image"> -->
-                  <div class="content"><a class="header">{{this.$store.state.avatar}}</a></div>
+                  <img v-bind:src=item.avatar class="ui avatar image">
+                  <div class="content" @click="toUser(item.authorid)"><a class="header">{{item.username}}</a></div>
                 </div>
                 <div class="item">
                   <i class="calendar icon"></i> {{item.time}}
@@ -40,7 +40,6 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="text item" v-html="item.content" style="cursor:pointer;" @click="toBlog(item.id)"> -->
             <div class="text item" v-html="$options.filters.setContent(item.content)" style="cursor:pointer;" @click="toBlog(item.id)">
             </div>
           </el-card>
@@ -52,7 +51,7 @@
           </div>
         </el-card>
       <span slot="footer" class="dialog-footer">
-  </span>
+      </span>
       </div>
     </el-dialog>
   </div>
@@ -76,7 +75,11 @@ export default {
     toBlog (blogId) {
       this.$store.state.searchFlag = false;
       this.$router.push({ path: "/blog/" + blogId });
-    }
+    },
+    toUser (userId) {
+      this.$store.state.searchFlag = false;
+      this.$router.push({ path: "/userinfo/" + userId });
+    },
   },
   filters: {
     setContent (value) {

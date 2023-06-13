@@ -44,7 +44,7 @@
                       <div class="ui mini horizontal link list">
                         <div class="item">
                           <!-- <img v-bind:src=item.avatar class="ui avatar image"> -->
-                          <div class="content"><a class="header">{{item.username}}</a></div>
+                          <div class="content" @click="toUser(item.authorid)"><a class="header">{{item.username}}</a></div>
                         </div>
                         <div class="item">
                           <i class="calendar icon"></i> {{item.time}}
@@ -58,7 +58,7 @@
                       </div>
                     </div>
                     <div class="right aligned five wide column">
-                      <a target="_blank" class="ui my-blue basic label m-padded-tiny m-text-thin">{{item.labelname}}</a>
+                      <a target="_blank" class="ui my-blue basic label m-padded-tiny m-text-thin">{{item.categoryName}}</a>
                     </div>
                   </div>
                 </div>
@@ -126,6 +126,9 @@ export default {
     toBlog (blogId) {
       this.$store.state.blogId = blogId;
       this.$router.push({ path: "/blog/" + blogId });
+    },
+    toUser (userId) {
+      this.$router.push({ path: "/userinfo/" + userId });
     },
     async saveNavState (item) {
       this.activeId = item.id
