@@ -21,19 +21,19 @@
               @keyup.enter="forget"
             />
           </el-form-item>
-       <el-form-item label="邮箱" prop="email">
+       <!-- <el-form-item label="邮箱" prop="email"> -->
          <!-- 用户名 -->
-        <el-input
+        <!-- <el-input
           v-model="formData.email"
           label="邮箱号"
           placeholder="请输入您的邮箱号"
           clearable
           @keyup.enter="forget"
-        />
-       </el-form-item>
-          <el-form-item prop="code" label="验证码">
+        /> -->
+       <!-- </el-form-item> -->
+          <!-- <el-form-item prop="code" label="验证码"> -->
             <!-- 验证码 -->
-            <div class="mt-7 send-wrapper">
+            <!-- <div class="mt-7 send-wrapper">
               <el-input
                 maxlength="6"
                 v-model="formData.code"
@@ -45,7 +45,7 @@
                 {{ codeMsg }}
               </el-button>
             </div>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="密码" prop="password">
         <!-- 密码 -->
         <el-input

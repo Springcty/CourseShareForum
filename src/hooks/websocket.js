@@ -4,7 +4,7 @@ function useWebSocket (handleMessage) {
   if (username == null) {
     username = ''
   }
-  // const ws = new WebSocket(`ws://127.0.0.1:9002/admin/chat/${username}`)
+  // const ws = new WebSocket(`ws://101.37.254.247:9002/admin/chat/${username}`)
   const ws = new WebSocket(`wss://www.tcefrep.site/admin/chat/${username}`)
   const init = () => {
     bindEvent()

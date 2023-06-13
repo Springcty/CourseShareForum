@@ -44,7 +44,7 @@
           <div class="ui blue segment">
             <div class="ui threaded comments" style="max-width: 100%">
               <h3 class="ui dividing header">评论列表</h3>
-              <div class="comment" v-for="item in dataList2" :key="item.commentId">
+              <div class="comment" v-for="item in dataList2" :key="item.id">
                 <a class="avatar">
                   <img v-bind:src=item.avatar>
                 </a>
@@ -104,12 +104,12 @@ export default {
       avatar: '',
       dataList: [],
       dataList2: [],
-      likeFlag: false,
-      starFlag: false
+      likeFlag: '',
+      starFlag: ''
     }
   },
   created () {
-    this.uid = this.$store.state.uid
+    this.uid = this.$store.state.id
     this.formData.blogId = this.$route.path.split('/blog/')[1]
     this.getOneBlog()
     this.getCommentList()
@@ -139,14 +139,6 @@ export default {
     async like () {
       if (this.toLogin()) {
         const blogId = this.$store.state.blogId
-        // const { data: res } = await this.$http.get(`/api/likes/${blogId}/${this.uid}`)
-        // if (res.flag) {
-        //   this.$message.success(res.message)
-        //   this.likeFlag = true
-        // } else {
-        //   this.$message.info(res.message)
-        //   this.likeFlag = false
-        // }
         if (this.likeFlag === false) {
           const { data: res } = await this.$http.get(`/api/likes/${blogId}`)
           if (res.flag) {
@@ -184,20 +176,26 @@ export default {
       this.$confirm('是否删除该评论？', '提示', { // 确认框
         type: 'warning'
       }).then(() => {
-        const commentId = item.commentId
+        const commentId = item.id
         const blogId = this.$store.state.blogId
         // 表单校验通过，发ajax请求，把数据录入至后台处理
         this.$http.delete(`/api/comment/delete/${blogId}/${commentId}`).then((res) => {
-          if (res.flag) {
-            this.getCommentList()
-            this.formData.content = '请输入评论内容'
-            this.$message({
-              message: '删除评论成功',
-              type: 'success'
-            })
-          } else { // 执行失败
-            this.$message.error(res.message)
-          }
+          this.getCommentList()
+          this.formData.content = '请输入评论内容'
+          this.$message({
+            message: '删除评论成功',
+            type: 'success'
+          })
+          // if (res.flag) {
+          //   this.getCommentList()
+          //   this.formData.content = '请输入评论内容'
+          //   this.$message({
+          //     message: '删除评论成功',
+          //     type: 'success'
+          //   })
+          // } else { // 执行失败
+          //   this.$message.error(res.message)
+          // }
         })
       }).catch(() => {
         this.$message({
@@ -205,6 +203,15 @@ export default {
           message: '删除操作已取消'
         })
       })
+    },
+    getCurrentTime () {
+      const year = new Date().getFullYear()
+      const month = new Date().getMonth() + 1 < 10 ? '0' + (new Date().getMonth() + 1) : new Date().getMonth() + 1
+      const date = new Date().getDate()
+      const hour = new Date().getHours() < 10 ? '0' + new Date().getHours() : new Date().getHours()
+      const minute = new Date().getMinutes() < 10 ? '0' + new Date().getMinutes() : new Date().getMinutes()
+      const second = new Date().getSeconds() < 10 ? '0' + new Date().getSeconds() : new Date().getSeconds()
+      return year + '-' + month + '-' + date + ' ' + hour + ':' + minute + ':' + second
     },
     async addComment () {
       if (this.toLogin()) {
@@ -214,23 +221,19 @@ export default {
           id: null,
           articleid: this.$store.state.blogId,
           userid: this.uid,
-          time: null,
+          time: this.getCurrentTime(),
           content: this.formData.content
         }
         this.$http.post('/api/comment/reply', param).then((res) => {
-          if (res.flag) {
-            this.getCommentList()
-            this.formData.content = '请输入评论内容'
-            this.$message({
-              message: '回复评论成功',
-              type: 'success'
-            })
-            setTimeout(() => {
-              this.reloadPrism()
-            }, 1000)
-          } else { // 执行失败
-            this.$message.error('回复评论失败')
-          }
+          this.getCommentList()
+          this.formData.content = '请输入评论内容'
+          this.$message({
+            message: '回复评论成功',
+            type: 'success'
+          })
+          setTimeout(() => {
+            this.reloadPrism()
+          }, 1000)
         })
       }
     },
@@ -246,12 +249,22 @@ export default {
     },
     // 获取所有的菜单
     async getOneBlog () {
-      // const { data: res } = await this.$http.get(`/api/server${this.$route.path}`)
-      const { data: res } = await this.$http.get(`/api/articles/${this.formData.blogId}`)
+      // const { data: res } = await this.$http.get(`/api/articles/${this.formData.blogId}`)
+      // const param = { user: this.$store.state.token ? this.$store.state.uid : null }
+      const param = {
+        id: this.$store.state.id,
+        username: null,
+        password: null,
+        avatar: null,
+        priviledged: false
+      }
+      const { data: res } = await this.$http.post(`/api/articles/${this.formData.blogId}`, param)
       if (!res.flag) {
         return this.$message.error(res.message)
       }
       this.dataList = res.data
+      this.likeFlag = res.data.liked
+      this.starFlag = res.data.stared
       setTimeout(() => {
         // eslint-disable-next-line no-undef
         tocbot.init({

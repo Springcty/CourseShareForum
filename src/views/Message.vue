@@ -31,7 +31,7 @@
                 height="30"
                 style="border-radius:50%"
               />
-              <span class="ml-2">{{ slotProps.item.nickname }} :</span>
+              <span class="ml-2">{{ slotProps.item.username }} :</span>
               <span class="ml-2">{{ slotProps.item.messageContent }}</span>
             </span>
           </template>
@@ -48,7 +48,7 @@ Vue.use(vueBaberrage)
 export default {
   created () {
     this.avatar = this.$store.state.avatar
-    this.nickname = this.$store.state.nickname
+    this.username = this.$store.state.username
   },
   mounted () {
     this.listMessage()
@@ -56,7 +56,7 @@ export default {
   data () {
     return {
       avatar: '',
-      nickname: '',
+      username: '',
       show: false,
       messageContent: '',
       barrageList: []
@@ -71,12 +71,12 @@ export default {
       const userAvatar = this.avatar
         ? this.avatar
         : 'https://r.photo.store.qq.com/psc?/V53KcXfb1umonn4HbITu3rINxs43TczD/45NBuzDIW489QBoVep5mccJUo7*q6gaMPZmbFDSW8tjmAm4XwuoUZmMKw3asmvn1mxsE*Tf0fj.VOh2G6OX7v4duFOfedV2oGNQ*GrJEPkA!/r'
-      const userNickname = this.nickname
-        ? this.nickname
+      const userusername = this.username
+        ? this.username
         : '游客'
       const message = {
         avatar: userAvatar,
-        nickname: userNickname,
+        username: userusername,
         messageContent: this.messageContent,
         time: Math.floor(Math.random() * 10 + 6)
       }

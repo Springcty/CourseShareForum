@@ -6,7 +6,7 @@ export default new Vuex.Store({
   state: {
     count: 0,
     token: '', // 用户token
-    uid: null,
+    id: null,
     avatar: null,
     username: null,
     nickname: null,
@@ -23,7 +23,7 @@ export default new Vuex.Store({
     music: false,
     songId: null,
     parentCommentId: null,
-    typeId: null,
+    categoryId: null,
     tagId: null,
     activePath: null,
     userMenuList: [],
@@ -60,15 +60,15 @@ export default new Vuex.Store({
       state.asyncRoutes = asyncRoutes;
     },
     login (state, user) {
-      state.uid = user.uid;
+      state.id = user.id;
       state.avatar = user.avatar;
-      state.username = user.username
-      state.nickname = user.nickname;
-      state.email = user.email;
-      state.loginType = user.loginType;
+      state.username = user.username;
+      state.nickname = null; // 暂不支持nickname
+      state.email = null; // 暂不支持email
+      state.loginType = 1; // 固定loginType伪1
     },
     logout (state) {
-      state.uid = null
+      state.id = null
       state.avatar = null
       state.username = null
       state.nickname = null

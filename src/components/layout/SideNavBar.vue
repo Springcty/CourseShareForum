@@ -157,7 +157,7 @@ export default {
       }
     },
     isLogin () {
-      return this.$store.state.uid;
+      return this.$store.state.id;
     }
   },
   methods: {

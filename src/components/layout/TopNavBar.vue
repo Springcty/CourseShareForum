@@ -48,7 +48,7 @@
           </a>
         </div>
         <div class="user-btn">
-          <a v-if="!this.$store.state.avatar">
+          <a v-if="!this.$store.state.token">
             <i class="el-icon-user-solid" style="color: whitesmoke"/><span style="color: whitesmoke;margin-right: 10px">登录</span>
             <ul class="user-submenu">
               <li>
@@ -90,17 +90,17 @@
       </div>
     </div>
     <SearchModel ref="searchModel"></SearchModel>
-    <Room v-if="this.$store.state.username" ref="room"></Room>
+    <!-- <Room v-if="this.$store.state.username" ref="room"></Room> -->
   </div>
 </template>
 
 <script>
 import SearchModel from '../model/SearchModel'
-import Room from '../../views/backyard/Room'
+// import Room from '../../views/backyard/Room'
 import { resetRouter } from '../../router'
 export default {
   components: {
-    Room,
+    // Room,
     SearchModel
   },
   mounted () {

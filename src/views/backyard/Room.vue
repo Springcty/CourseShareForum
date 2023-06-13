@@ -65,7 +65,7 @@
           </div>
           <!--        好友界面-->
           <div class="ui cards my-UICards" v-if="viewType==2">
-            <div class="card my-cards" v-for="item in userList" :key="item.uid" @click="openDialog(item)">
+            <div class="card my-cards" v-for="item in userList" :key="item.id" @click="openDialog(item)">
               <div class="content">
                 <img class="right floated mini ui image" style="height: 50px!important;width: 50px!important;"
                      v-bind:src="item.avatar">
@@ -288,7 +288,7 @@ export default {
       avatar: '', // 头像
       friendAvatar: '',
       friendNickName: '',
-      uid: '',
+      id: '',
       friendId: '',
       joinRoom: [],
       messageContent: [],
@@ -356,7 +356,7 @@ export default {
       var formData = new window.FormData()
       formData.append('file', file)
       formData.append('textType', 3)
-      formData.append('sender', this.uid)
+      formData.append('sender', this.id)
       formData.append('receiver', this.friendId)
       formData.append('toName', this.toName)
       formData.append('fromName', this.$store.state.username)
@@ -476,7 +476,7 @@ export default {
       this.ws.send(JSON.stringify(message))
       if (this.isGroup) { // 发到群聊的那个表
         const param = {
-          uid: this.uid,
+          id: this.id,
           roomId: 1,
           content: url,
           textType: 2
@@ -489,7 +489,7 @@ export default {
         })
       } else { // 发送到私聊
         const param = {
-          sender: this.uid,
+          sender: this.id,
           receiver: this.friendId,
           content: url,
           textType: 2
@@ -573,7 +573,7 @@ export default {
       }
     },
     async initChat () {
-      if (this.$store.state.uid) {
+      if (this.$store.state.id) {
         const { data: res } = await this.$http.get('/api/server/friends/admin/getFriendsList')
         if (res.flag) {
           this.friendsList = res.data
@@ -616,7 +616,7 @@ export default {
         this.toBottom()
         this.ws.send(JSON.stringify(message))
         const param = {
-          sender: this.uid,
+          sender: this.id,
           receiver: this.friendId,
           content: this.messageToSend,
           textType: 1
@@ -645,7 +645,7 @@ export default {
         this.toBottom()
         this.ws.send(JSON.stringify(message))
         const param = {
-          uid: this.uid,
+          id: this.id,
           roomId: 1,
           content: this.messageToSend,
           textType: 1
@@ -673,7 +673,7 @@ export default {
     },
     privateChatMessage () {
       const param = {
-        sender: this.uid,
+        sender: this.id,
         receiver: this.friendId,
         currentPage: this.currentPage
       }
@@ -719,8 +719,8 @@ export default {
         type: 'warning'
       }).then(() => {
         const param = {
-          uid: this.uid,
-          friendId: item.uid
+          id: this.id,
+          friendId: item.id
         }
         this.$http.post('/api/server/friends/admin/addFriend', param).then((res) => {
           // 关闭新增窗口
@@ -743,7 +743,7 @@ export default {
   },
   created () {
     this.avatar = this.$store.state.avatar
-    this.uid = this.$store.state.uid
+    this.id = this.$store.state.id
     this.initChat()
     this.getUserList()
     const ws = useWebSocket(handleMessage)

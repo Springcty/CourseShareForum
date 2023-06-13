@@ -23,7 +23,25 @@
             <div slot="header" class="clearfix">
               <span style="font-weight: bold;cursor:pointer;" v-html="item.title" @click="toBlog(item.id)"></span>
             </div>
-            <div class="text item" v-html="item.content" style="cursor:pointer;" @click="toBlog(item.id)">
+            <div class="eleven wide column">
+              <div class="ui mini horizontal link list">
+                <div class="item">
+                  <!-- <img v-bind:src=item.avatar class="ui avatar image"> -->
+                  <div class="content"><a class="header">{{this.$store.state.avatar}}</a></div>
+                </div>
+                <div class="item">
+                  <i class="calendar icon"></i> {{item.time}}
+                </div>
+                <div class="item">
+                  <i class="eye icon"></i> {{item.views}}
+                </div>
+                <div class="item">
+                  <i class="thumbs up outline icon"></i> {{item.likes}}
+                </div>
+              </div>
+            </div>
+            <!-- <div class="text item" v-html="item.content" style="cursor:pointer;" @click="toBlog(item.id)"> -->
+            <div class="text item" v-html="$options.filters.setContent(item.content)" style="cursor:pointer;" @click="toBlog(item.id)">
             </div>
           </el-card>
           <br>
@@ -58,6 +76,15 @@ export default {
     toBlog (blogId) {
       this.$store.state.searchFlag = false;
       this.$router.push({ path: "/blog/" + blogId });
+    }
+  },
+  filters: {
+    setContent (value) {
+      if (!value) return "";
+      if (value.length > 125) {
+        return value.slice(0, 125) + "...";
+      }
+      return value;
     }
   },
   mounted () {

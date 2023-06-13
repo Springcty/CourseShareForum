@@ -22,9 +22,9 @@
           <!--                        id,用户名，真实姓名，角色，备注，最后登录时间，创建时间-->
           <el-table-column type="index" min-width="15px" align="center" label="序号"></el-table-column>
           <el-table-column prop="title" label="标题" align="center"></el-table-column>
-          <el-table-column prop="description" label="简介" align="center"></el-table-column>
+          <el-table-column prop="descript" label="简介" align="center"></el-table-column>
           <el-table-column prop="typeName" label="类型" align="center"></el-table-column>
-          <el-table-column prop="createTime" label="创建时间" align="center"></el-table-column>
+          <!-- <el-table-column prop="createTime" label="创建时间" align="center"></el-table-column> -->
           <el-table-column label="管理" align="center">
             <template slot-scope="scope">
               <el-button size="mini" type="primary" @click="toBlog(scope.row.blogId)">查看博客</el-button>
@@ -84,9 +84,12 @@ export default {
       const param = {
         currentPage: this.pagination.currentPage,
         pageSize: this.pagination.pageSize,
-        queryString: this.pagination.queryString
+        queryString: this.pagination.queryString,
+        sort: "new",
+        categoryId: null,
+        labelId: null
       }
-      const { data: res } = await this.$http.post('/api/server/blog/admin/findFavoritesPage', param)
+      const { data: res } = await this.$http.post('/api/stars/getByUser', param)
       if (!res.flag) {
         return this.$message.error(res.message)
       }
@@ -115,7 +118,7 @@ export default {
       this.resetForm()
     },
     cancelFavorites (blogId) {
-      const { data: res } = this.$http.get(`/api/server/blog/favorite/${blogId}/${this.uid}`)
+      const { data: res } = this.$http.get(`/api/server/blog/favorite/${blogId}/${this.id}`)
       if (res.flag) {
         this.$message.success(res.message)
       }

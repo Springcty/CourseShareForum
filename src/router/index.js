@@ -22,6 +22,7 @@ const Login = () => import(/* webpackChunkName: "Login_NotFound" */ '../views/ad
 const Home = () => import(/* webpackChunkName: "Home_Types_Tag_Crawler" */ '../views/Home.vue')
 const Types = () => import(/* webpackChunkName: "Home_Types_Tag_Crawler" */ '../views/type/Types.vue')
 const Tags = () => import(/* webpackChunkName: "Home_Types_Tag_Crawler" */ '../views/type/Tags.vue')
+const UserInfo = () => import('../views/UserInfo.vue')
 // const Crawler = () => import(/* webpackChunkName: "Home_Types_Tag_Crawler" */ '../views/crawler/Crawler.vue')
 // const CrawlerBlog = () => import(/* webpackChunkName: "Home_Types_Tag_Crawler" */ '../views/crawler/CrawlerBlog.vue')
 
@@ -67,7 +68,7 @@ export const constantRoutes = [
     component: Blog
   },
   {
-    path: '/Types/:typeId',
+    path: '/Types/:categoryId',
     name: 'Types',
     component: Types
   },
@@ -91,21 +92,11 @@ export const constantRoutes = [
     name: 'message',
     component: Message
   },
-  // {
-  //   path: '/Crawler',
-  //   name: 'Crawler',
-  //   component: Crawler
-  // },
-  // {
-  //   path: '/CrawlerBlog',
-  //   name: 'CrawlerBlog',
-  //   component: CrawlerBlog
-  // },
-  // {
-  //   path: '/CrawlerBlog/:blogId',
-  //   name: 'CrawlerBlog',
-  //   component: CrawlerBlog
-  // },
+  {
+    path: '/UserInfo/:userId',
+    name: 'UserInfo',
+    component: UserInfo
+  },
   // {
   //   path: '*',
   //   component: NotFound

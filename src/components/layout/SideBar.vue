@@ -15,7 +15,7 @@
             </template>
 
             <!-- 二级菜单 -->
-            <el-menu-item :index="'/' + subItem.path" v-for="subItem in item.children" :key="subItem.id" @click="saveNavState('/' + subItem.path)">
+            <el-menu-item :index="subItem.path" v-for="subItem in item.children" :key="subItem.id" @click="saveNavState('/' + subItem.path)">
               <template slot="title">
                 <!-- 图标 -->
                 <i v-bind:class="subItem.icon"></i>
@@ -71,9 +71,9 @@ export default {
 <style scoped>
   .el-aside {
     background-color: #333744;
+  }
   .el-menu {
     border-right: none;
-  }
   }
 
   .el-main {

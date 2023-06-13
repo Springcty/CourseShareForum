@@ -3,8 +3,10 @@ import store from "../../store";
 import Layout from "../../components/layout/AdminHome.vue";
 import axios from "axios";
 import Vue from "vue";
+// import { error } from "jquery";
+
 export function generaMenu () {
-  axios.get("/api/server/menu/admin/listUserMenus").then(({ data }) => {
+  axios.get('http://101.37.254.247:9001/menu/admin/listUserMenus').then(({ data }) => {
     if (data.flag) {
       const asyncRoutes = [
         {
@@ -30,6 +32,7 @@ export function generaMenu () {
           });
         }
       });
+
       // 加载用户菜单
       router.addRoutes(asyncRoutes);
       store.commit('saveAsyncRoutes', asyncRoutes)
@@ -39,7 +42,10 @@ export function generaMenu () {
       Vue.prototype.$message.error("请先登录");
       router.push({ path: "/login" });
     }
-  });
+  })
+    .catch(error => {
+      console.log(error)
+    });
 }
 
 export const loadView = view => {

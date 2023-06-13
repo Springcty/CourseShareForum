@@ -13,7 +13,7 @@
     <div class="box">
 <!--    <div  class="m-container-small m-padded-tb-big">-->
       <div class="filter-container">
-        <el-input placeholder="请输入标题" v-model="pagination.queryString" style="width: 200px;"
+        <!-- <el-input placeholder="请输入标题" v-model="pagination.queryString" style="width: 200px;"
                   class="filter-item" clearable @clear="findPage"></el-input>
         <el-select v-model="value" placeholder="请选择">
           <el-option
@@ -23,7 +23,7 @@
             :value="item.value">
           </el-option>
         </el-select>
-        <el-button @click="findPage()" icon="el-icon-search" class="dalfBut">查询博客</el-button>
+        <el-button @click="findPage()" icon="el-icon-search" class="dalfBut">查询博客</el-button> -->
         <el-button type="primary" class="butT" @click="pushPostBlogs">添加博客</el-button>
       </div>
       <div class="ui container">
@@ -32,20 +32,18 @@
           <el-table-column type="index" min-width="15px" align="center" label="序号"></el-table-column>
           <el-table-column prop="title" label="标题" align="center"></el-table-column>
           <el-table-column prop="typeName" label="类型" align="center"></el-table-column>
-          <el-table-column label="推荐" prop="recommend">
+          <!-- <el-table-column label="推荐" prop="recommend">
             <template slot-scope="scope">
               <el-switch v-model="scope.row.recommend"
                          @change="recommendStateChanged(scope.row)">
               </el-switch>
             </template>
-          </el-table-column>
-          <el-table-column prop="flag" label="状态" align="center"></el-table-column>
-          <el-table-column prop="updateTime" label="更新时间" align="center"></el-table-column>
+          </el-table-column> -->
           <el-table-column label="管理" align="center">
             <template slot-scope="scope">
-              <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
+              <!-- <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button> -->
               <el-button size="mini" type="primary" @click="handleUpdate(scope.row)">编辑</el-button>
-              <!--              <el-button size="mini" type="info" @click="handleForbidden(scope.row)">禁用</el-button>-->
+              <!-- <el-button size="mini" type="info" @click="handleForbidden(scope.row)">禁用</el-button> -->
             </template>
           </el-table-column>
         </el-table>
@@ -68,8 +66,8 @@
                      label-width="100px">
               <el-row>
                 <el-col :span="12">
-                  <el-form-item label="分类编号" prop="typeId">
-                    <el-input v-model="formData.typeId"/>
+                  <el-form-item label="分类编号" prop="categoryId">
+                    <el-input v-model="formData.categoryId"/>
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
@@ -112,7 +110,7 @@ export default {
       dialogFormVisible4Edit: false, // 编辑表单是否可见
       dataList: [], // 当前页要展示的分页列表数据
       user: {},
-      nickname: '',
+      username: '',
       // 被激活的链接地址
       avatar: '',
       rules: { // 校验规则
@@ -138,10 +136,13 @@ export default {
       const param = {
         currentPage: this.pagination.currentPage,
         pageSize: this.pagination.pageSize,
-        queryString: this.pagination.queryString
+        queryString: this.pagination.queryString,
+        sort: "new",
+        categoryId: null,
+        labelId: null
       }
-      var param2 = this.$encrypTion(JSON.stringify(param))
-      const { data: res } = await this.$http.post('/api/server/blog/admin/findPage', param2)
+      // var param2 = this.$encrypTion(JSON.stringify(param))
+      const { data: res } = await this.$http.post('/api/articles/findPage', param)
       // 解析controller响应回的数据
       if (!res.flag) {
         return this.$message.error(res.message)

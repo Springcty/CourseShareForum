@@ -47,7 +47,7 @@
                         <div class="ui mini horizontal link list">
                           <div class="item">
                             <!-- <img v-bind:src=item.avatar class="ui avatar image"> -->
-                            <div class="content"><a class="header">{{item.username}}</a></div>
+                            <div class="content" @click="toUser(item.authorid)"><a class="header">{{item.username}}</a></div>
                           </div>
                           <div class="item">
                             <i class="calendar icon"></i> {{item.time}}
@@ -228,13 +228,16 @@ export default {
     toTag (tagId) {
       this.$router.push({ path: "/tags/" + tagId });
     },
-    toType (typeId) {
-      this.$router.push({ path: "/types/" + typeId });
+    toType (categoryId) {
+      this.$router.push({ path: "/types/" + categoryId });
     },
     toBlog (blogId) {
       this.$store.state.searchFlag = false;
       this.$store.state.blogId = blogId;
       this.$router.push({ path: "/blog/" + blogId });
+    },
+    toUser (userId) {
+      this.$router.push({ path: "/userinfo/" + userId });
     },
     async getLatestList () {
       const { data: res } = await this.$http.get('/api/home/latestList')

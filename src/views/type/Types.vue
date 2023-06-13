@@ -123,6 +123,7 @@ export default {
         total: 0, // 总记录数
       },
       user: {},
+      username: '',
       // 被激活的链接地址
       avatar: ''
     }
