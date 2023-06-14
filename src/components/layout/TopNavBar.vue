@@ -57,7 +57,7 @@
                 </router-link>
               </li>
               <li>
-                <a href="http://101.37.254.247:8081/">
+                <a href="http://localhost:8080/">
                   <i class="user secret icon"/> 管理员
                 </a>
               </li>
@@ -66,10 +66,11 @@
           <template v-else>
             <img
               class="user-avatar"
-              v-bind:src=this.$store.state.avatar
+              src="../../assets/images/avatars/0.jpg"
               height="30"
               width="30"
             />
+            <!-- v-bind:src=this.$store.state.avatar -->
             <ul class="user-submenu">
               <li>
                 <router-link to="/adminHome">

@@ -195,7 +195,7 @@ export default {
   }
   .tags-banner {
     height:  67vh;
-    background: url(https://www.static.talkxj.com/wallhaven-13mk9v.jpg) center
+    background: url("../../assets/images/label.jpg") center
     center / cover no-repeat;
     background-color: #49b1f5;
   }

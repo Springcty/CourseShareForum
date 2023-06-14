@@ -9,7 +9,7 @@
         <div class="ui top attached segment">
           <div class="ui horizontal link list">
             <div class="item">
-              <img v-bind:src="dataList.avatar" class="ui avatar image">
+              <img src="../assets/images/avatars/2.jpg" class="ui avatar image">
               <div class="content" @click="toUser(dataList.authorid)"><a class="header">{{dataList.username}}</a></div>
             </div>
             <div class="item">
@@ -355,8 +355,8 @@ export default {
   }
   .blog-banner {
     height: 25vh;
-    /* background: url(https://r.photo.store.qq.com/psc?/V53KcXfb1umonn4HbITu3rINxs43TczD/45NBuzDIW489QBoVep5mcSPhM*LqG*bYzP4o2JVbahf8eHd4Yd9FO1B4n8UbWJRaQANKT1EBypIfvSNRueI1LSu6d212FUoavpm63ZrUI3E!/r) center
-    center / cover no-repeat; */
+    background: url("../assets/images/blog.jpg") center
+    center / cover no-repeat;
     background-color: #49b1f5;
   }
 </style>

@@ -207,8 +207,8 @@ export default {
   }
   .types-banner {
     height: 67vh;
-    /* background: url(https://r.photo.store.qq.com/psc?/V53KcXfb1umonn4HbITu3rINxs43TczD/45NBuzDIW489QBoVep5mcSPhM*LqG*bYzP4o2JVbaheOs2JWlUoBrHyiAhmNeT.Mc*97fdCoA2.t2KVGQ6m2uCiYugKboqB1H4fEZShV3MM!/r) center
-    center / cover no-repeat; */
+    background: url("../../assets/images/category.jpg") center
+    center / cover no-repeat;
     background-color: #49b1f5;
   }
 </style>

@@ -26,7 +26,8 @@
             <div class="eleven wide column">
               <div class="ui mini horizontal link list">
                 <div class="item">
-                  <img v-bind:src=item.avatar class="ui avatar image">
+                  <img src="../../assets/images/avatars/4.jpg" class="ui avatar image">
+                  <!-- <img v-bind:src=item.avatar class="ui avatar image"> -->
                   <div class="content" @click="toUser(item.authorid)"><a class="header">{{item.username}}</a></div>
                 </div>
                 <div class="item">

@@ -1,3 +1,4 @@
+<!-- eslint-disable no-trailing-spaces -->
 <template>
     <div class="login_container">
       <!-- banner -->
@@ -49,11 +50,62 @@
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-col :span="24">
+            <!-- <el-row>
+              <el-col :span="24">
+                <el-form-item label="头像">
+                  <el-radio-group v-model="navatar">
+                    <el-radio v-for="option in options" :key="option.label" :label="option.label">
+                      <img :src="option.image" alt="Avatar" class="avatar-image">
+                    </el-radio>
+                  </el-radio-group>
+                </el-form-item>
+              </el-col>
+            </el-row> -->
+            <!-- <el-row>
+                <el-form-item label="头像" prop="avatar">
+                    <el-radio-group v-model="navatar">
+                      <el-radio :label="0">
+                        fig1
+                        <img src="../../assets/images/avatars/0.jpg" alt="Avatar" style="width:50px; height:50px">
+                      </el-radio>
+                      <el-radio :label="1">
+                        fig2
+                        <img src="../../assets/images/avatars/1.jpg" alt="Avatar" style="width:50px; height:50px">
+                      </el-radio>
+                      <el-radio :label="2">
+                        <img src="../../assets/images/avatars/2.jpg" alt="Avatar" style="width:50px; height:50px">
+                      </el-radio>
+                      <el-radio :label="3">
+                        <img src="../../assets/images/avatars/3.jpg" alt="Avatar" style="width:50px; height:50px">
+                      </el-radio>
+                      <el-radio :label="4">
+                        <img src="../../assets/images/avatars/4.jpg" alt="Avatar" style="width:50px; height:50px">
+                      </el-radio>
+                      <el-radio :label="5">
+                        <img src="../../assets/images/avatars/5.jpg" alt="Avatar" style="width:50px; height:50px">
+                      </el-radio>
+                      <el-radio :label="6">
+                        <img src="../../assets/images/avatars/6.jpg" alt="Avatar" style="width:50px; height:50px">
+                      </el-radio>
+                      <el-radio :label="7">
+                        <img src="../../assets/images/avatars/7.jpg" alt="Avatar" style="width:50px; height:50px">
+                      </el-radio>
+                      <el-radio :label="8">
+                        <img src="../../assets/images/avatars/8.jpg" alt="Avatar" style="width:50px; height:50px">
+                      </el-radio>
+                      <el-radio :label="9">
+                        <img src="../../assets/images/avatars/9.jpg" alt="Avatar" style="width:50px; height:50px">
+                      </el-radio>
+                    </el-radio-group>
+                </el-form-item>
+              </el-row> -->
+
+            <!-- <el-col :span="24">
               <el-form-item label="头像地址">
                 <el-input v-model="userData.avatar"/>
               </el-form-item>
             </el-col>
+            
             <el-col>
               <el-form-item label="or选择本地图片当头像">
               <el-upload
@@ -71,7 +123,7 @@
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
               </el-form-item>
-            </el-col>
+            </el-col> -->
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取消</el-button>
@@ -84,6 +136,7 @@
 
 <script>
 import { generaMenu } from '../../assets/js/menu'
+
 export default {
   data () {
     return {
@@ -93,7 +146,7 @@ export default {
         id: '',
         username: '',
         password: '',
-        avatar: '头像参考地址：https://picsum.photos/images，将右边链接image后的id换成自己的即可（https://unsplash.it/100/100?image=1）',
+        avatar: '../../assets/images/avatars/0.jpg',
         privileged: false
       },
       dialogFormVisible: false, // 增加表单是否可见
@@ -120,13 +173,29 @@ export default {
         // code: [
         //   { required: true, message: '请输入验证码', trigger: 'blur' }
         // ]
-      }
+      },
+      navatar: 4, // 初始值为 null
+      options: [
+        { label: 0, image: '../../assets/images/avatars/0.jpg' },
+        { label: 1, image: '../../assets/images/avatars/1.jpg' },
+        { label: 2, image: '../../assets/images/avatars/2.jpg' },
+        { label: 3, image: '../../assets/images/avatars/3.jpg' },
+        { label: 4, image: '../../assets/images/avatars/4.jpg' },
+        { label: 5, image: '../../assets/images/avatars/5.jpg' },
+        { label: 6, image: '../../assets/images/avatars/6.jpg' },
+        { label: 7, image: '../../assets/images/avatars/7.jpg' },
+        { label: 8, image: '../../assets/images/avatars/8.jpg' },
+        { label: 9, image: '../../assets/images/avatars/9.jpg' }
+      ]
     }
   },
   created () {
     // this.getVerifyCode()
   },
   methods: {
+    renderOption (option) {
+      return `<img src="${option.image}" alt="Avatar">`;
+    },
     async login () {
       this.$refs.loginFormRef.validate(async valid => {
         if (!valid) return
@@ -248,8 +317,8 @@ export default {
   }
   .archive-banner {
     height: 110vh;
-    // background: url(https://r.photo.store.qq.com/psc?/V53KcXfb1umonn4HbITu3rINxs43TczD/45NBuzDIW489QBoVep5mccYPEGHYJF8vf05Y7Jp3Sq4PYCDwfPyvkq4c5VlhffPJbHw4QoE1dsiS8OtN2H5XvhPtg1C1JZwAOMeqYFSoGDg!/r) center center /
-    // cover no-repeat;
+    background: url("../../assets/images/user.jpg") center center /
+    cover no-repeat;
     background-color: #49b1f5;
   }
   .login_container {

@@ -26,14 +26,14 @@
           <el-row>
             <el-col :span="8">
               <el-form-item prop="password" label="新密码">
-                <el-input v-model="formData.password"></el-input>
+                <el-input v-model="formData.password" show-password></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="8">
               <el-form-item prop="oldpassword" label="旧密码">
-                <el-input v-model="formData.oldpassword"></el-input>
+                <el-input v-model="formData.oldpassword" show-password></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -46,7 +46,7 @@
                 </el-form-item>
               </el-col>
           </el-row> -->
-          <el-row>
+          <!-- <el-row>
             <el-col :span="8">
               <el-form-item prop="username" label="头像">
                 <el-upload
@@ -60,20 +60,15 @@
                   :auto-upload="false"
                   :show-file-list="true"
                   :on-exceed="masterFileMax">
-                  <!-- :http-request="uploadPic" -->
-                  <!-- :on-success="handleAvatarSuccess" -->
-
                   <el-button slot="trigger" size="small" type="default">上传图片</el-button>
                   <div slot="tip" class="el-upload__tip">请上传JPG, JEPG, PNG, 大小不超过1M</div>
-                  <!-- <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                  <i v-else class="el-icon-plus avatar-uploader-icon"></i> -->
                 </el-upload>
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-button @click="submitFile" type="default">确认</el-button>
             </el-col>
-          </el-row>
+          </el-row> -->
           <el-form-item>
 
             <el-button type="primary" @click="submitForm()">立即修改</el-button>

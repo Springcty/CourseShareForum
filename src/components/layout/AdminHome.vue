@@ -3,7 +3,14 @@
     <!-- 头部区域 -->
     <el-header>
       <div>
-        <el-avatar :src="this.$store.state.avatar"></el-avatar>
+        <!-- <el-avatar src="../../assets/images/avatars/0.jpg"></el-avatar> -->
+        <!-- <el-avatar :src="this.$store.state.avatar"></el-avatar> -->
+        <img
+              class="user-avatar"
+              src="../../assets/images/avatars/0.jpg"
+              height="30"
+              width="30"
+            />
         <span>博客后台管理</span>
       </div>
       <router-link to="/home">

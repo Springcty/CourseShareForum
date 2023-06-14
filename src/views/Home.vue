@@ -315,8 +315,8 @@ export default {
     left: 0;
     right: 0;
     height: 25vh;
-    /* background: url("https://r.photo.store.qq.com/psc?/V53KcXfb1umonn4HbITu3rINxs43TczD/45NBuzDIW489QBoVep5mcQaBtLM2yTpYe999VZqnRjqLW3e23.UCR78O5Km8SpsknNgOGpEzdY7QHY1usDO6pbksfeQBV5CqlMGgsjJVV9s!/r") center center /
-    cover no-repeat; */
+    background: url("../assets/images/home.jpg") center center /
+    cover no-repeat;
     background-color: #49b1f5;
     background-attachment: fixed;
     text-align: center;
