@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.software.blogserver.mapper.LabelsDao">
+
+    <select id="getLabelCount" resultType="com.software.blogserver.vo.LabelsVO">
+        SELECT DISTINCT l.id, l.label_name, COUNT(bl.label_id) labelcount
+        FROM labels l LEFT OUTER JOIN blog_label bl
+        ON l.id = bl.label_id
+        GROUP BY l.id
+        ORDER BY COUNT(bl.label_id) DESC
+    </select>
+    <select id="getArticleLabel" resultType="com.software.blogserver.entity.Labels">
+        SELECT l.id, l.label_name
+        FROM blog_label b, labels l
+        WHERE b.label_id = l.id AND b.article_id = #{id}
+    </select>
+    <select id="getVerified" resultType="java.lang.Integer">
+        SELECT COUNT(bl.label_id) labelcount
+        FROM labels l LEFT OUTER JOIN blog_label bl ON l.id = bl.label_id
+        LEFT OUTER JOIN articles a ON a.id = bl.article_id
+        WHERE a.verified = false AND bl.label_id = #{id}
+    </select>
+</mapper>

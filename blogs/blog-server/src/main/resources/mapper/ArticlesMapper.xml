@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.software.blogserver.mapper.ArticlesDao">
+    <select id="selectByLabel" parameterType="com.software.blogcommon.entity.QueryPageBean"
+            resultType="com.software.blogserver.vo.ArticlesVO">
+        SELECT a.id, a.verified, a.selected, a.time, a.category_id, a.title, a.content, a.descript, a.likes, a.stars, a.views, a.comments, a.author_id, c.category_name, u.user_name, u.avatar, l.label_name
+        FROM articles a, users u, categories c, blog_label bl, labels l
+        WHERE a.category_id = c.id AND a.author_id = u.id AND a.id = bl.article_id AND bl.label_id = l.id AND a.verified = true
+        <if test="queryPageBean.labelId !=null">
+            AND l.id = #{queryPageBean.labelId}
+        </if>
+        ORDER BY a.views DESC
+        LIMIT ${queryPageBean.pageSize * (queryPageBean.currentPage-1)},#{queryPageBean.pageSize}
+    </select>
+
+    <select id="selectPageNew" parameterType="com.software.blogcommon.entity.QueryPageBean"
+            resultType="com.software.blogserver.vo.ArticlesVO">
+        SELECT a.id, a.verified, a.selected, a.time, a.category_id, a.title, a.content, a.descript, a.likes, a.stars, a.views, a.comments, a.author_id, c.category_name, u.user_name, u.avatar
+        FROM articles a, users u, categories c
+        WHERE a.category_id = c.id AND a.author_id = u.id AND a.verified = true
+        <if test="queryPageBean.queryString !=null">
+            AND a.content LIKE '%${queryPageBean.queryString}%'
+        </if>
+        <if test="queryPageBean.categoryId !=null">
+            AND c.id = #{queryPageBean.categoryId}
+        </if>
+        <if test="queryPageBean.labelId !=null">
+            AND l.id = #{queryPageBean.labelId}
+        </if>
+        ORDER BY a.time DESC
+        LIMIT ${queryPageBean.pageSize * (queryPageBean.currentPage-1)},#{queryPageBean.pageSize}
+    </select>
+
+    <select id="selectPageHot" parameterType="com.software.blogcommon.entity.QueryPageBean"
+            resultType="com.software.blogserver.vo.ArticlesVO">
+        SELECT a.id, c.category_name, u.user_name, u.avatar, a.verified, a.selected, a.time, a.category_id, a.title, a.content, a.descript, a.likes, a.stars, a.views, a.comments, a.author_id
+        FROM articles a, users u, categories c
+        WHERE a.category_id = c.id AND a.author_id = u.id AND a.verified = true
+        <if test="queryPageBean.queryString !=null">
+            AND a.content LIKE '%${queryPageBean.queryString}%'
+        </if>
+        <if test="queryPageBean.categoryId !=null">
+            AND c.id = #{queryPageBean.categoryId}
+        </if>
+        <if test="queryPageBean.labelId !=null">
+            AND l.id = #{queryPageBean.labelId}
+        </if>
+        ORDER BY a.views DESC
+        LIMIT ${queryPageBean.pageSize * (queryPageBean.currentPage-1)},#{queryPageBean.pageSize}
+    </select>
+
+    <select id="selectByCategory" parameterType="com.software.blogcommon.entity.QueryPageBean"
+            resultType="com.software.blogserver.vo.ArticlesVO">
+        SELECT a.id, a.verified, a.selected, a.time, a.category_id, a.title, a.content, a.descript, a.likes, a.stars, a.views, a.comments, a.author_id, c.category_name, u.user_name, u.avatar
+        FROM articles a, users u, categories c
+        WHERE a.category_id = c.id AND a.author_id = u.id AND a.verified = true
+        <if test="queryPageBean.categoryId !=null">
+            AND c.id = #{queryPageBean.categoryId}
+        </if>
+        ORDER BY a.views DESC
+        LIMIT ${queryPageBean.pageSize * (queryPageBean.currentPage-1)},#{queryPageBean.pageSize}
+    </select>
+
+    <select id="selectSearch" parameterType="com.software.blogcommon.entity.QueryPageBean"
+            resultType="com.software.blogserver.vo.ArticlesVO">
+        SELECT a.id, c.category_name, u.user_name, u.avatar, a.verified, a.selected, a.time, a.category_id, a.title, a.content, a.descript, a.likes, a.stars, a.views, a.comments, a.author_id
+        FROM articles a, users u, categories c
+        WHERE a.category_id = c.id AND a.author_id = u.id AND a.verified = true
+        <if test="queryPageBean.queryString !=null">
+            AND (a.content LIKE '%${queryPageBean.queryString}%' OR a.title LIKE '%${queryPageBean.queryString}%' OR a.descript LIKE '%${queryPageBean.queryString}%')
+        </if>
+        ORDER BY a.views DESC
+        LIMIT ${queryPageBean.pageSize * (queryPageBean.currentPage-1)},#{queryPageBean.pageSize}
+    </select>
+    <select id="selectPageAdmin" parameterType="com.software.blogcommon.entity.QueryPageBean"
+            resultType="com.software.blogserver.vo.ArticlesVO">
+        SELECT a.id, a.verified, a.selected, a.time, a.category_id, a.title, a.content, a.descript, a.likes, a.stars, a.views, a.comments, a.author_id, c.category_name, u.user_name, u.avatar
+        FROM articles a, users u, categories c
+        WHERE a.category_id = c.id AND a.author_id = u.id
+        <if test="queryPageBean.queryString !=null">
+            AND a.content LIKE '%${queryPageBean.queryString}%'
+        </if>
+        <if test="queryPageBean.categoryId !=null">
+            AND c.id = #{queryPageBean.categoryId}
+        </if>
+        <if test="queryPageBean.labelId !=null">
+            AND l.id = #{queryPageBean.labelId}
+        </if>
+        ORDER BY a.time DESC
+        LIMIT ${queryPageBean.pageSize * (queryPageBean.currentPage-1)},#{queryPageBean.pageSize}
+    </select>
+    <select id="selectCountByLabel" parameterType="com.software.blogcommon.entity.QueryPageBean"
+            resultType="java.lang.Integer">
+        SELECT COUNT(a.id) labelcount
+        FROM articles a, users u, categories c, blog_label bl, labels l
+        WHERE a.category_id = c.id AND a.author_id = u.id AND a.id = bl.article_id AND bl.label_id = l.id AND a.verified = true
+        <if test="queryPageBean.labelId !=null">
+            AND l.id = #{queryPageBean.labelId}
+        </if>
+    </select>
+</mapper>
